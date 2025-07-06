@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Gerador de Vocações - Tibia</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>🛡️ Gerador de Vocações - Tibia OT</h1>
+
+  <form id="formulario">
+    <label>Nome do personagem: <input type="text" id="nome" required></label><br>
+    <label>ID inicial: <input type="number" id="idInicial" required></label><br>
+    <label>Quantidade de vocações: <input type="number" id="quantidade" required></label><br>
+    
+    <label>Separar melee e distance?
+      <select id="separar">
+        <option value="nao">Não</option>
+        <option value="sim">Sim</option>
+      </select>
+    </label><br>
+
+    <div id="tipoDiv" style="display:none;">
+      <label>Tipo principal:
+        <select id="tipo">
+          <option value="melee">Melee</option>
+          <option value="distance">Distance</option>
+        </select>
+      </label><br>
+    </div>
+
+    <button type="submit">Gerar XML</button>
+  </form>
+
+  <h2>Resultado:</h2>
+  <textarea id="saida" rows="20" cols="100" readonly></textarea>
+<button id="baixar">Baixar XML</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
