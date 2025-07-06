@@ -2,6 +2,7 @@ const form = document.getElementById("formulario");
 const tipoDiv = document.getElementById("tipoDiv");
 const saida = document.getElementById("saida");
 
+// Mostrar/ocultar campo de tipo principal
 document.getElementById("separar").addEventListener("change", (e) => {
   tipoDiv.style.display = e.target.value === "sim" ? "block" : "none";
 });
@@ -14,6 +15,7 @@ form.addEventListener("submit", (e) => {
   const quantidade = parseInt(document.getElementById("quantidade").value);
   const separar = document.getElementById("separar").value;
   const tipoPrincipal = separar === "sim" ? document.getElementById("tipo").value : "igual";
+  const incluirTier = document.getElementById("incluirTier").value;
 
   let xmlFinal = "";
 
@@ -33,14 +35,19 @@ form.addEventListener("submit", (e) => {
       melee = dist = (20 + i * 2).toFixed(1);
     }
 
-    xmlFinal += `<vocation id="${id}" name="${nome}" description="${nome} [TIER ${tier}]" needpremium="0" gaincap="100" gainhp="600" gainmana="600" gainhpticks="2" gainhpamount="100" gainmanaticks="2" gainmanaamount="100" manamultiplier="1.1" attackspeed="1100" soulmax="200" gainsoulticks="15" fromvoc="${id}" lessloss="8" manager="1">\n`;
+    const descricao = incluirTier === "sim" ? `${nome} [TIER ${tier}]` : nome;
+
+    xmlFinal += `<vocation id="${id}" name="${nome}" description="${descricao}" needpremium="0" gaincap="100" gainhp="600" gainmana="600" gainhpticks="2" gainhpamount="100" gainmanaticks="2" gainmanaamount="100" manamultiplier="1.1" attackspeed="1100" soulmax="200" gainsoulticks="15" fromvoc="${id}" lessloss="8" manager="1">\n`;
     xmlFinal += `    <formula meleeDamage="${melee}" distDamage="${dist}" wandDamage="1.0" magDamage="${(2 + i * 0.5).toFixed(1)}" magHealingDamage="1.0" defense="1.0" magDefense="1.0" armor="1.0"/>\n`;
     xmlFinal += `    <skill fist="1.0" club="1.5" sword="1.5" axe="1.5" distance="1.5" shielding="1.5" fishing="1.0" experience="${exp}"/>\n`;
     xmlFinal += `</vocation>\n\n`;
   }
 
   saida.value = xmlFinal;
-  document.getElementById("baixar").addEventListener("click", () => {
+});
+
+// Botão de baixar XML
+document.getElementById("baixar").addEventListener("click", () => {
   const xml = saida.value;
   const blob = new Blob([xml], { type: "text/xml" });
   const link = document.createElement("a");
@@ -50,6 +57,4 @@ form.addEventListener("submit", (e) => {
   link.href = URL.createObjectURL(blob);
   link.download = `${nomeArquivo}_vocations.xml`;
   link.click();
-});
-
 });
